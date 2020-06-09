@@ -48,7 +48,7 @@ const unlock = async function(redisKey: string, redisValue: any) {
   )
 }
 
-const hook_cron_redis = () => {
+const hook_cron_redis_lock = () => {
   return { lock, unlock }
 }
 ```
