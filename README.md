@@ -53,4 +53,51 @@ const hook_cron_redis = () => {
 }
 ```
 
-Sometime, we use Semo cron with Semo scripts and Semo commands, so the main logic will be in scripts and commands not in cron job file, it's up to you to choose how to use Semo cron.
+Sometimes, we use Semo cron with Semo scripts and Semo commands, so the main logic will be in scripts and commands not in cron job file, it's up to you to choose how to use Semo cron.
+
+You can generate cron job template by Semo generators command:
+
+```
+semo generate cron YOUR_CRON_JOB_NAME
+```
+
+Then you can get code template like this, depends on whether you use typescript or not:
+
+```js
+// Pure ES version
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
+// 示例 Job Actions
+const demoAction = async function demo() {
+  console.log('Demo job action')
+  await sleep(1000)
+}
+
+exports.schedule = '* * * * * *'
+exports.duration = 1000
+exports.actions = [demoAction]
+exports.disabled = false
+```
+
+NOTE: Here `actions` is an array, so it means you can set multiple different purpose actions in one job, and the `action` can be a shell command, that is useful in some cases.
+
+The format for shell command action should be in array style:
+
+```js
+...
+exports.actions = [['ls', '-l']]
+...
+```
+
+Maybe you want to use string style shell command, it works only for simple command without string options with blanks.
+
+```js
+...
+exports.actions = [['ls -l']] // work
+exports.actions = [['grep "a b c"']] // not work
+...
+```
+
+## License
+
+MIT

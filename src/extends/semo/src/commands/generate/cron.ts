@@ -33,11 +33,11 @@ export const handler = function(argv: any) {
 // 示例 Job Actions
 const demoAction = async function demo() {
   console.log('Demo job action')
-  await sleep(60000)
+  await sleep(1000)
 }
 
-export const schedule = '* * * * *'
-export const duration = 60000
+export const schedule = '* * * * * *'
+export const duration = 1000
 export const actions = [demoAction]
 export const disabled = false
 export const env = 'production'
@@ -48,11 +48,11 @@ export const env = 'production'
 // 示例 Job Actions
 const demoAction = async function demo() {
   console.log('Demo job action')
-  await sleep(60000)
+  await sleep(1000)
 }
 
-exports.schedule = '* * * * *'
-exports.duration = 60000
+exports.schedule = '* * * * * *'
+exports.duration = 1000
 exports.actions = [demoAction]
 exports.disabled = false
 `

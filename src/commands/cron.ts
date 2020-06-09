@@ -59,7 +59,9 @@ const shell = {
 export const command = 'cron [job]'
 export const desc = `zhike cron system`
 
-export const builder = function(yargs: any) {}
+export const builder = function(yargs: any) {
+  yargs.option('list', { desc: 'Just list all crons.', alias: ['L', 'ls'] })
+}
 
 export const handler = async function(argv: any) {
   if (!argv.cronDir || !fs.existsSync(argv.cronDir)) {
@@ -81,13 +83,13 @@ export const handler = async function(argv: any) {
           process.exit(0)
         } else {
           Utils.error('Job not valid')
+          return
         }
       } else {
         Utils.error('Job not found')
+        return
       }
     }
-
-    const { lock, unlock } = await Utils.invokeHook('cron_redis')
 
     const jobs: { [propName: string]: any } = {}
     glob
@@ -97,6 +99,25 @@ export const handler = async function(argv: any) {
       .map(function(job) {
         jobs[job] = require(path.resolve(process.cwd(), config.cronDir, job))
       })
+
+    if (argv.list) {
+      const header = ['Cron', 'Status'].map(item => Utils.chalk.green.bold(item))
+      const rows = [header]
+      const jobKeys = Object.keys(jobs)
+      if (jobKeys.length > 0) {
+        jobKeys.forEach(job => {
+          rows.push([job, jobs[job].disabled ? 'Disabled' : 'Enabled'])
+        })
+
+        Utils.outputTable(rows)
+        return
+      } else {
+        Utils.info(`No cron jobs found, you can use ${Utils.chalk.green('semo generate cron')} to generate a cron template file.`)
+        return
+      }
+    }
+
+    const { lock, unlock } = await Utils.invokeHook('cron_redis')
 
     // 注册计划任务
     if (Object.keys(jobs).length > 0) {
