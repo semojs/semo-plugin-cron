@@ -127,7 +127,7 @@ export const handler = async function(argv: any) {
         cron.schedule(jobs[key].schedule, function() {
           debug(`${new Date().toLocaleString()} - JOB: [${key}] started!`)
           ;(async () => {
-            if (lock & unlock) {
+            if (lock && unlock) {
               const redisKey = `${config.name}:cronjob:${key}`
               const redisValue = Math.random()
 
