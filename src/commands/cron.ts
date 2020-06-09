@@ -57,7 +57,7 @@ const shell = {
 }
 
 export const command = 'cron [job]'
-export const desc = `zhike cron system`
+export const desc = `Semo cron system`
 
 export const builder = function(yargs: any) {
   yargs.option('list', { desc: 'Just list all crons.', alias: ['L', 'ls'] })
@@ -72,7 +72,7 @@ export const handler = async function(argv: any) {
   const config = Utils.getCombinedConfig()
   try {
     // 通过 Hook 进行初始化动作
-    const initInfo = await Utils.invokeHook('zhike_cron')
+    const initInfo = await Utils.invokeHook('cron_setup')
 
     // run specific job for testing, ignore disabled property
     if (argv.job) {
