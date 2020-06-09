@@ -117,7 +117,7 @@ export const handler = async function(argv: any) {
       }
     }
 
-    const { lock, unlock } = await Utils.invokeHook('cron_redis')
+    const { lock, unlock } = await Utils.invokeHook('cron_redis_lock')
 
     // 注册计划任务
     if (Object.keys(jobs).length > 0) {
