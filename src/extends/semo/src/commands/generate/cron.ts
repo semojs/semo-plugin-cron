@@ -14,10 +14,12 @@ export const builder = function(yargs: any) {
 
 export const handler = function(argv: any) {
   const cronDir = argv.cronMakeDir || argv.cronDir
-  if (!cronDir || !fs.existsSync(cronDir)) {
-    console.log(Utils.chalk.red('"cronDir" missing in config file or not exist in current directory!'))
+  if (!cronDir) {
+    console.log(Utils.chalk.red('"cronDir" missing in config file!'))
     return
   }
+
+  Utils.fs.ensureDirSync(cronDir)
 
   const filePrefix = Utils.day().format('YYYYMMDDHHmmssSSS')
   const cronFile = path.resolve(cronDir, `${filePrefix}_${Utils._.kebabCase(argv.name)}.${argv.typescript ? 'ts' : 'js'}`)
