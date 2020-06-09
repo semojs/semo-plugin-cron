@@ -24,7 +24,7 @@ You can implement hook_cron_redis to provide a redis lock and unlock, so you can
 // In your project Semo hook file: hooks/index
 
 
-import { redis } from 'semo-plugin-redis
+import { redis } from 'semo-plugin-redis'
 const redisInstance = await redis.load('redisKey')
 
 // Redis锁，加锁
