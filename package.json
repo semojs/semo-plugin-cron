@@ -1,6 +1,6 @@
 {
   "name": "semo-plugin-cron",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "A Semo plugin to provide simple cron job.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
