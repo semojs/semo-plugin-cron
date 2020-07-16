@@ -72,7 +72,7 @@ export const handler = async function(argv: any) {
   const config = Utils.getCombinedConfig()
   try {
     // 通过 Hook 进行初始化动作
-    const initInfo = await Utils.invokeHook('cron_setup')
+    const initInfo = await Utils.invokeHook('cron:setup')
 
     // run specific job for testing, ignore disabled property
     if (argv.job) {
@@ -117,7 +117,7 @@ export const handler = async function(argv: any) {
       }
     }
 
-    const { lock, unlock } = await Utils.invokeHook('cron_redis_lock')
+    const { lock, unlock } = await Utils.invokeHook('cron:redis_lock')
 
     // 注册计划任务
     if (Object.keys(jobs).length > 0) {
