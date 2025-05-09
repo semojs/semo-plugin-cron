@@ -17,3 +17,4 @@ tests/*
 lib/**/*.map
 .lintstagedrc
 eslint.config.ts
+example/*
