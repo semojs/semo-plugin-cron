@@ -1,5 +1,4 @@
-semo-plugin-cron
-------------------------
+## semo-plugin-cron
 
 A Semo plugin to provide simple cron job.
 
@@ -14,7 +13,7 @@ $ semo cron
 You need to add related settigns for cron working in .semorc.yml
 
 ```
-cronDir: 
+cronDir:
 cronMakeDir:
 ```
 
@@ -48,8 +47,10 @@ const unlock = async function(redisKey: string, redisValue: any) {
   )
 }
 
-const hook_cron_redis_lock = () => {
-  return { lock, unlock }
+const hook_cron_redis_lock = {
+  'semo-plugin-cron': () => {
+    return { lock, unlock }
+  }
 }
 ```
 
@@ -65,7 +66,7 @@ Then you can get code template like this, depends on whether you use typescript 
 
 ```js
 // Pure ES version
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 // 示例 Job Actions
 const demoAction = async function demo() {
@@ -73,10 +74,10 @@ const demoAction = async function demo() {
   await sleep(1000)
 }
 
-exports.schedule = '* * * * * *'
-exports.duration = 1000
-exports.actions = [demoAction]
-exports.disabled = false
+export const schedule = '* * * * * *'
+export const duration = 1000
+export const actions = [demoAction]
+export const disabled = false
 ```
 
 NOTE: Here `actions` is an array, so it means you can set multiple different purpose actions in one job, and the `action` can be a shell command, that is useful in some cases.
